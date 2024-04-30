@@ -4,10 +4,10 @@ echo "(function () {" >> output.js
 
 # Copy in the dependencies
 cat deps/moment.js >> output.js
-cat deps/chart.js >> output.js
+cat deps/Chart.js >> output.js
 cat deps/timeline.js >> output.js
 cat deps/md5.js >> output.js
-cat deps/filesaver.js >> output.js
+cat deps/FileSaver.js >> output.js
 
 # Copy in the actual sources
 cat src/languages.js >> output.js
