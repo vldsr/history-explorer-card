@@ -35,6 +35,7 @@ const lang_en =
             "n_months" : "%1 Months",
             "year" : "1 Year"
         },
+        "duration": "Duration: %1",
         "interval" : {
             "_10m" : "10 min",
             "hourly" : "Hourly",
@@ -458,6 +459,7 @@ const lang_ru =
             "n_months" : "%1 Мес",
             "year" : "1 Год"
         },
+        "duration": "Длительность: %1",
         "interval" : {
             "_10m" : "10 мин",
             "hourly" : "По часам",
