@@ -358,61 +358,52 @@ function hecHookInfoPanel()
 
             return html`
                 <div id="maincard" style="display:${(hec_panel.show === false) ? 'none' : 'block'};margin-bottom: 16px">
-                <div style="margin-bottom:10px;width:100%;min-height:30px;text-align:center;display:block;line-height:normal;">
-                    <div id="dl_${i}" style="background-color:${bgcol};float:left;margin-left:${isMobile ? -12 : -4}px;display:inline-block;padding-left:10px;padding-right:10px;">
-                        <button id="b1_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000;height:30px"><</button>
-                        <button id="bx_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000;height:30px">-</button>
-                        <button id="b2_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000;height:30px">></button>
+                    <div id='graphlist' style="margin-left:-2px;margin-right:-10px">
+                        <div>
+                            <select id='bd-0' style="display:${(type == 'bar' && interval) ? 'block' : 'none'};position:relative;float:right;width:80px;right:10px;color:var(--primary-text-color);background-color:${cbcol};border:0px solid black;">
+                                <option value="0" style="color:${optColor};background-color:${optBack}">10m</option>
+                                <option value="1" style="color:${optColor};background-color:${optBack}" selected>Hourly</option>
+                                <option value="2" style="color:${optColor};background-color:${optBack}">Daily</option>
+                                <option value="3" style="color:${optColor};background-color:${optBack}">Monthly</option>
+                                <option value="4" style="color:${optColor};background-color:${optBack}">As line</option>
+                            </select>
+                            <button id='ca-0' style="display:${(type == 'line' || type == 'bar') ? 'block' : 'none'};position:absolute;margin-left:-12px;background:none;opacity:1.0;border:0px solid black;">
+                                <svg style='display:none' width="18" height="18" viewBox="0 0 24 24"><path fill="var(--primary-text-color)" d="M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg>
+                            </button>
+                            <canvas id="graph0" height="${h}px" style='touch-action:pan-y'></canvas>
+                        </div>
                     </div>
-                    <div id="dr_${i}" style="background-color:${bgcol};float:right;margin-right:${isMobile ? -12 : -4}px;display:inline-block;padding-left:${isMobile ? 5 : 10}px;padding-right:10px;">
-                        <button id="bz_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000"><svg width="24" height="24" viewBox="0 0 24 24" style="vertical-align:middle;"><path fill="var(--primary-text-color)" d="M15.5,14L20.5,19L19,20.5L14,15.5V14.71L13.73,14.43C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.43,13.73L14.71,14H15.5M9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14M12,10H10V12H9V10H7V9H9V7H10V9H12V10Z" /></svg></button>
-                        <button id="b${invertZoom ? 5 : 4}_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000;height:30px">-</button>
-                        <select id="by_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000;height:30px;max-width:83px">
-                            <option value="0" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="1" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="2" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="3" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="4" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="5" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="6" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="7" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="8" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="9" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="10" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="11" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="12" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="24" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="48" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="72" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="96" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="120" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="144" style="color:${optColor};background-color:${optBack}" hidden></option>
-                            <option value="168" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="336" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="504" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="720" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="2184" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="4368" style="color:${optColor};background-color:${optBack}"></option>
-                            <option value="8760" style="color:${optColor};background-color:${optBack}"></option>
-                        </select>
-                        <button id="b${invertZoom ? 4 : 5}_${i}" style="margin:0px;border:0px solid black;color:inherit;background-color:#00000000;height:30px">+</button>
+                    <div style="display:flex;justify-content: space-between;margin: 10px 20px;">
+                        <div id="dl_${i}">
+                            <ha-button id="b1_${i}"><ha-icon icon="mdi:chevron-left" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                            <ha-button id="bx_${i}">-</ha-button>
+                            <ha-button id="b2_${i}"><ha-icon icon="mdi:chevron-right" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                        </div>
+                        <div id="dr_${i}">
+                            <ha-button id="bz_${i}"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                            <ha-button id="b${invertZoom ? 5 : 4}_${i}"><ha-icon icon="mdi:minus" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                            <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:200px;">
+                                <div slot="trigger">
+                                    <ha-button></ha-button>
+                                </div>
+                                <mwc-list-item value="1"></mwc-list-item>
+                                <mwc-list-item value="2"></mwc-list-item>
+                                <mwc-list-item value="6"></mwc-list-item>
+                                <mwc-list-item value="24"></mwc-list-item>
+                                <mwc-list-item value="12"></mwc-list-item>
+                                <mwc-list-item value="48"></mwc-list-item>
+                                <mwc-list-item value="72"></mwc-list-item>
+                                <mwc-list-item value="168"></mwc-list-item>
+                                <mwc-list-item value="336"></mwc-list-item>
+                                <mwc-list-item value="504"></mwc-list-item>
+                                <mwc-list-item value="720"></mwc-list-item>
+                                <mwc-list-item value="2184"></mwc-list-item>
+                                <mwc-list-item value="4368"></mwc-list-item>
+                                <mwc-list-item value="8760"></mwc-list-item>
+                            </ha-button-menu>
+                            <ha-button id="b${invertZoom ? 4 : 5}_${i}"><ha-icon icon="mdi:plus" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                        </div>
                     </div>
-                </div>
-                <div id='graphlist' style="margin-left:-2px;margin-right:-10px">
-                    <div>
-                        <select id='bd-0' style="display:${(type == 'bar' && interval) ? 'block' : 'none'};position:relative;float:right;width:80px;right:10px;color:var(--primary-text-color);background-color:${cbcol};border:0px solid black;">
-                            <option value="0" style="color:${optColor};background-color:${optBack}">10m</option>
-                            <option value="1" style="color:${optColor};background-color:${optBack}" selected>Hourly</option>
-                            <option value="2" style="color:${optColor};background-color:${optBack}">Daily</option>
-                            <option value="3" style="color:${optColor};background-color:${optBack}">Monthly</option>
-                            <option value="4" style="color:${optColor};background-color:${optBack}">As line</option>
-                        </select>
-                        <button id='ca-0' style="display:${(type == 'line' || type == 'bar') ? 'block' : 'none'};position:absolute;margin-left:-12px;background:none;opacity:1.0;border:0px solid black;">
-                            <svg style='display:none' width="18" height="18" viewBox="0 0 24 24"><path fill="var(--primary-text-color)" d="M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg>
-                        </button>
-                        <canvas id="graph0" height="${h}px" style='touch-action:pan-y'></canvas>
-                    </div>
-                </div>
                 </div>
                 `;
 

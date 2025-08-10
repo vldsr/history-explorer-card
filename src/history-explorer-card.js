@@ -644,7 +644,7 @@ export class HistoryCardState {
         if (!control) {
             return;
         }
-        control.items.forEach(item => item.activated = item.value == range);
+        control.items?.forEach(item => item.activated = item.value == range);
         control.querySelector('ha-button').innerText = this.getRangeText(range);
     }
 
@@ -2434,7 +2434,7 @@ export class HistoryCardState {
             html = `<div style="position:sticky;${threshold};padding-top:${this.ui.hideHeader ? 0 : 15}px;padding-bottom:10px;margin-top:-${this.ui.hideHeader ? 0 : 15}px;z-index:1;background-color:var(--card-background-color);line-height:0px;">`;
         }
 
-        if (dateTools || zoomTools || selector) html += `<div style="margin-left:0px;width:100%;min-height:30px;text-align:center;display:block;line-height:normal;${i?'':'margin-top:8px;'}">`;
+        if (dateTools || zoomTools || selector) html += `<div style="margin-left:0px;width:100%;min-height:30px;text-align:center;display:block;line-height:normal;${i ? '' : 'margin-top:8px;'}">`;
 
         const eh = `<a id="eh_${i}" href="#" style="display:block;padding:5px 5px;text-decoration:none;color:inherit"></a>`;
 
@@ -2449,24 +2449,24 @@ export class HistoryCardState {
             <div id="dr_${i}">
                 <ha-button id="bz_${i}"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
                 <ha-button id="b${invertZoom ? 5 : 4}_${i}"><ha-icon icon="mdi:minus" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
-                <ha-button-menu id="by_${i}">
+                <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:300px;">
                     <div slot="trigger">
                         <ha-button></ha-button>
                     </div>
-                    <mwc-list-item value="1">${this.getRangeText(1)}</mwc-list-item>
-                    <mwc-list-item value="2">${this.getRangeText(2)}</mwc-list-item>
-                    <mwc-list-item value="6">${this.getRangeText(6)}</mwc-list-item>
-                    <mwc-list-item value="24">${this.getRangeText(24)}</mwc-list-item>
-                    <mwc-list-item value="12">${this.getRangeText(12)}</mwc-list-item>
-                    <mwc-list-item value="48">${this.getRangeText(48)}</mwc-list-item>
-                    <mwc-list-item value="72">${this.getRangeText(72)}</mwc-list-item>
-                    <mwc-list-item value="168">${this.getRangeText(168)}</mwc-list-item>
-                    <mwc-list-item value="336">${this.getRangeText(336)}</mwc-list-item>
-                    <mwc-list-item value="504">${this.getRangeText(504)}</mwc-list-item>
-                    <mwc-list-item value="720">${this.getRangeText(720)}</mwc-list-item>
-                    <mwc-list-item value="2184">${this.getRangeText(2184)}</mwc-list-item>
-                    <mwc-list-item value="4368">${this.getRangeText(4368)}</mwc-list-item>
-                    <mwc-list-item value="8760">${this.getRangeText(8760)}</mwc-list-item>
+                    <mwc-list-item value="1"></mwc-list-item>
+                    <mwc-list-item value="2"></mwc-list-item>
+                    <mwc-list-item value="6"></mwc-list-item>
+                    <mwc-list-item value="24"></mwc-list-item>
+                    <mwc-list-item value="12"></mwc-list-item>
+                    <mwc-list-item value="48"></mwc-list-item>
+                    <mwc-list-item value="72"></mwc-list-item>
+                    <mwc-list-item value="168"></mwc-list-item>
+                    <mwc-list-item value="336"></mwc-list-item>
+                    <mwc-list-item value="504"></mwc-list-item>
+                    <mwc-list-item value="720"></mwc-list-item>
+                    <mwc-list-item value="2184"></mwc-list-item>
+                    <mwc-list-item value="4368"></mwc-list-item>
+                    <mwc-list-item value="8760"></mwc-list-item>
                 </ha-button-menu>
                 <ha-button id="b${invertZoom ? 4 : 5}_${i}"><ha-icon icon="mdi:plus" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
             </div>`;
@@ -2540,10 +2540,14 @@ export class HistoryCardState {
     }
 
     insertUIHtmlText(i) {
-        let ef = this._this.querySelector(`#ef_${i}`); if (ef) ef.innerHTML = i18n('ui.menu.export_csv');
-        let eh = this._this.querySelector(`#eh_${i}`); if (eh) eh.innerHTML = i18n('ui.menu.export_stats');
-        let eg = this._this.querySelector(`#eg_${i}`); if (eg) eg.innerHTML = i18n('ui.menu.remove_all');
-        let ei = this._this.querySelector(`#ei_${i}`); if (ei) ei.innerHTML = infoPanelEnabled ? i18n('ui.menu.disable_panel') : i18n('ui.menu.enable_panel');
+        const ef = this._this.querySelector(`#ef_${i}`); if (ef) ef.innerHTML = i18n('ui.menu.export_csv');
+        const eh = this._this.querySelector(`#eh_${i}`); if (eh) eh.innerHTML = i18n('ui.menu.export_stats');
+        const eg = this._this.querySelector(`#eg_${i}`); if (eg) eg.innerHTML = i18n('ui.menu.remove_all');
+        const ei = this._this.querySelector(`#ei_${i}`); if (ei) ei.innerHTML = infoPanelEnabled ? i18n('ui.menu.disable_panel') : i18n('ui.menu.enable_panel');
+        setTimeout(() => {
+            const by = this._this.querySelector(`#by_${i}`);
+            by?.items?.forEach(item => item.innerText = this.getRangeText(+item.value));
+        });
     }
 
     resize() {
