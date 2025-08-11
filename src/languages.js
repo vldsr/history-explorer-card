@@ -24,16 +24,16 @@ const lang_en =
             "disable_panel" : "Disable history info panel"
         },
         "ranges" : {
-            "l_hour" : "< 1 H",
-            "hour" : "1 H",
-            "n_hours" : "%1 H",
-            "day" : "1 Day",
-            "n_days" : "%1 Days",
-            "week" : "1 Week",
-            "n_weeks" : "%1 Weeks",
-            "month" : "1 Month",
-            "n_months" : "%1 Months",
-            "year" : "1 Year"
+            "l_hour" : "<1H",
+            "hour" : "1H",
+            "n_hours" : "%1H",
+            "day" : "1D",
+            "n_days" : "%1D",
+            "week" : "1W",
+            "n_weeks" : "%1W",
+            "month" : "1M",
+            "n_months" : "%1M",
+            "year" : "1Y"
         },
         "duration": "Duration: %1",
         "interval" : {

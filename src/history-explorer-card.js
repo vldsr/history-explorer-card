@@ -2352,7 +2352,7 @@ export class HistoryCardState {
         let html = '';
         html += `<div style='height:${h}px'>`;
         html += `<canvas id="graph${this.g_id}" height="${h}px" style='touch-action:pan-y'></canvas>`;
-        html += `<ha-button id='bc-${this.g_id}' style="position:absolute;right:20px;margin-top:${-h + 5}px;" variant="neutral" appearance="plain" size="small">
+        html += `<ha-button id='bc-${this.g_id}' style="position:absolute;right:10px;margin-top:${-h + 5}px;" variant="neutral" appearance="plain" size="small">
             <ha-icon icon="mdi:close" style="margin-left:-12px;margin-right:-12px;"></ha-icon>
         </ha-button>`
         if (type == 'bar' && !this.ui.hideInterval)
@@ -2438,37 +2438,36 @@ export class HistoryCardState {
 
         const eh = `<a id="eh_${i}" href="#" style="display:block;padding:5px 5px;text-decoration:none;color:inherit"></a>`;
 
-        dateTools && zoomTools && (html += '<div style="display:flex;justify-content: space-between;margin: 10px 20px;">');
+        dateTools && zoomTools && (html += '<div style="display:flex;justify-content: space-between;margin: 10px;white-space:nowrap;flex-wrap:wrap">');
         if (dateTools) html += `
             <div id="dl_${i}">
-                <ha-button id="b1_${i}"><ha-icon icon="mdi:chevron-left" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
-                <ha-button id="bx_${i}">-</ha-button>
-                <ha-button id="b2_${i}"><ha-icon icon="mdi:chevron-right" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                <ha-button id="b1_${i}" size="small"><ha-icon icon="mdi:chevron-left" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button id="bx_${i}" size="small" appearance="plain">-</ha-button>
+                <ha-button id="b2_${i}" size="small"><ha-icon icon="mdi:chevron-right" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
             </div>`;
         if (zoomTools) html += `
             <div id="dr_${i}">
-                <ha-button id="bz_${i}"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
-                <ha-button id="b${invertZoom ? 5 : 4}_${i}"><ha-icon icon="mdi:minus" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                <ha-button id="bz_${i}" size="small"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small"><ha-icon icon="mdi:minus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
                 <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:300px;">
                     <div slot="trigger">
-                        <ha-button></ha-button>
+                        <ha-button appearance="plain" size="small"></ha-button>
                     </div>
                     <mwc-list-item value="1"></mwc-list-item>
                     <mwc-list-item value="2"></mwc-list-item>
                     <mwc-list-item value="6"></mwc-list-item>
-                    <mwc-list-item value="24"></mwc-list-item>
                     <mwc-list-item value="12"></mwc-list-item>
+                    <mwc-list-item value="24"></mwc-list-item>
                     <mwc-list-item value="48"></mwc-list-item>
                     <mwc-list-item value="72"></mwc-list-item>
                     <mwc-list-item value="168"></mwc-list-item>
                     <mwc-list-item value="336"></mwc-list-item>
-                    <mwc-list-item value="504"></mwc-list-item>
                     <mwc-list-item value="720"></mwc-list-item>
                     <mwc-list-item value="2184"></mwc-list-item>
                     <mwc-list-item value="4368"></mwc-list-item>
                     <mwc-list-item value="8760"></mwc-list-item>
                 </ha-button-menu>
-                <ha-button id="b${invertZoom ? 4 : 5}_${i}"><ha-icon icon="mdi:plus" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
+                <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small"><ha-icon icon="mdi:plus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
             </div>`;
         dateTools && zoomTools && (html += '</div>');
 
