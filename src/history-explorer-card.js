@@ -466,14 +466,20 @@ export class HistoryCardState {
     // --------------------------------------------------------------------------------------
 
     selectBarInterval(event) {
-        const id = event.target.id.substr(event.target.id.indexOf("-") + 1);
+        const id = event.currentTarget.id.substr(event.currentTarget.id.indexOf("-") + 1);
+        const children = [...event.currentTarget.children];
+        const value = children.indexOf(event.target)
+        if (value < 0) {
+            return;
+        }
+        children.forEach(button => button.appearance = (button == event.target) ? 'accent' : 'filled');
 
         for (let i = 0; i < this.graphs.length; i++) {
             if (this.graphs[i].id == id) {
 
-                this.graphs[i].interval = event.target.value;
+                this.graphs[i].interval = value;
 
-                const ntype = (event.target.value == 4) ? 'line' : 'bar';
+                const ntype = (value == 4) ? 'line' : 'bar';
 
                 if (ntype !== this.graphs[i].type) {
                     if (ntype == 'line') {
@@ -501,13 +507,14 @@ export class HistoryCardState {
     createIntervalSelectorHtml(gid, h, selected, optionStyle) {
         if (selected === undefined) selected = 1;
 
-        return `<select id='bd-${gid}' style="position:absolute;right:50px;width:${this.ui.wideInterval ? 100 : 80}px;margin-top:${-h + 5}px;color:var(--primary-text-color);background-color:${this.pconfig.closeButtonColor};border:0px solid black;">
-                    <option value="0" ${optionStyle} ${(selected == 0) ? 'selected' : ''}>${i18n('ui.interval._10m')}</option>
-                    <option value="1" ${optionStyle} ${(selected == 1) ? 'selected' : ''}>${i18n('ui.interval.hourly')}</option>
-                    <option value="2" ${optionStyle} ${(selected == 2) ? 'selected' : ''}>${i18n('ui.interval.daily')}</option>
-                    <option value="3" ${optionStyle} ${(selected == 3) ? 'selected' : ''}>${i18n('ui.interval.monthly')}</option>
-                    <option value="4" ${optionStyle} ${(selected == 4) ? 'selected' : ''}>${i18n('ui.interval.rawline')}</option>
-                </select>`;
+        return `
+            <div id='bd-${gid}' style="display: flex;flex-direction: row;justify-content: flex-end; margin-bottom: 10px;">
+                <ha-button size="small" appearance="${(selected == 0) ? 'accent' : 'filled'}" style="--ha-border-radius-pill: 9999px 0 0 9999px;">10m</ha-button>
+                <ha-button size="small" appearance="${(selected == 1) ? 'accent' : 'filled'}" style="--ha-border-radius-pill: 0;">1H</ha-button>
+                <ha-button size="small" appearance="${(selected == 2) ? 'accent' : 'filled'}" style="--ha-border-radius-pill: 0;">1D</ha-button>
+                <ha-button size="small" appearance="${(selected == 3) ? 'accent' : 'filled'}" style="--ha-border-radius-pill: 0;">1M</ha-button>
+                <ha-button size="small" appearance="${(selected == 4) ? 'accent' : 'filled'}" style="--ha-border-radius-pill: 0 9999px 9999px 0;">Line</ha-button>
+            </div>`
     }
 
     parseIntervalConfig(s) {
@@ -558,7 +565,8 @@ export class HistoryCardState {
         if (e) {
             e.style.display = (fixedScale && !axisInteraction) ? 'none' : 'inherit';
             e.style.opacity = (axisInteraction || g.yaxisLock) ? 1.0 : 0.3;
-            e.querySelector('ha-icon').icon = (axisInteraction || g.yaxisLock) ? 'mdi:lock' : 'mdi:lock-open-variant';
+            const icon = e.querySelector('ha-icon')
+            icon && (icon.icon = (axisInteraction || g.yaxisLock) ? 'mdi:lock' : 'mdi:lock-open-variant');
         }
     }
 
@@ -1272,7 +1280,10 @@ export class HistoryCardState {
 
                         // Search for the first state in the time range
                         while (i < n && moment(result[id][i].last_changed) <= t) {
-                            y0 = this.process(result[id][i++].state, process) * 1.0;
+                            const state = this.process(result[id][i++].state, process) * 1.0;
+                            if (!isNaN(state)) {
+                                y0 = state;
+                            }
                         }
 
                         // Calculate differentials over the time range in interval sized stacks, add a half interval at the end so that the last bar doesn't jump
@@ -2280,7 +2291,7 @@ export class HistoryCardState {
 
         // For bar graphs, connect the interval selector dropdown listener
         if (g.graph.type == 'bar') {
-            this._this.querySelector(`#bd-${g.id}`)?.addEventListener('change', this.selectBarInterval.bind(this));
+            this._this.querySelector(`#bd-${g.id}`)?.addEventListener('click', this.selectBarInterval.bind(this));
         }
 
         // For line and bar graphs connect the scale lock button listener
@@ -2350,13 +2361,13 @@ export class HistoryCardState {
         const h = this.calcGraphHeight(type, entities.length, entityOptions?.height);
 
         let html = '';
+        if (type == 'bar' && !this.ui.hideInterval)
+            html += this.createIntervalSelectorHtml(this.g_id, h, this.parseIntervalConfig(entityOptions?.interval), this.ui.optionStyle);
         html += `<div style='height:${h}px'>`;
         html += `<canvas id="graph${this.g_id}" height="${h}px" style='touch-action:pan-y'></canvas>`;
         html += `<ha-button id='bc-${this.g_id}' style="position:absolute;right:10px;margin-top:${-h + 5}px;" variant="neutral" appearance="plain" size="small">
             <ha-icon icon="mdi:close" style="margin-left:-12px;margin-right:-12px;"></ha-icon>
         </ha-button>`
-        if (type == 'bar' && !this.ui.hideInterval)
-            html += this.createIntervalSelectorHtml(this.g_id, h, this.parseIntervalConfig(entityOptions?.interval), this.ui.optionStyle);
         if (type == 'line' || type == 'bar')
             html += this.createScaleLockIconHtml(this.g_id, h);
         html += `</div>`;
@@ -2369,7 +2380,7 @@ export class HistoryCardState {
 
         // For bar graphs, connect the interval selector dropdown listener
         if (type == 'bar' && !this.ui.hideInterval)
-            this._this.querySelector(`#bd-${this.g_id}`).addEventListener('change', this.selectBarInterval.bind(this));
+            this._this.querySelector(`#bd-${this.g_id}`).addEventListener('click', this.selectBarInterval.bind(this));
 
         // For line and bar graphs connect the scale lock button listener
         if (type == 'line' || type == 'bar')
@@ -2438,20 +2449,20 @@ export class HistoryCardState {
 
         const eh = `<a id="eh_${i}" href="#" style="display:block;padding:5px 5px;text-decoration:none;color:inherit"></a>`;
 
-        dateTools && zoomTools && (html += '<div style="display:flex;justify-content: space-between;margin: 10px;white-space:nowrap;flex-wrap:wrap">');
+        (dateTools || zoomTools) && (html += '<div style="display:flex;justify-content: space-around;margin: 10px 10px 0 10px;white-space:nowrap;flex-wrap:wrap">');
         if (dateTools) html += `
-            <div id="dl_${i}">
-                <ha-button id="b1_${i}" size="small"><ha-icon icon="mdi:chevron-left" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
-                <ha-button id="bx_${i}" size="small" appearance="plain">-</ha-button>
-                <ha-button id="b2_${i}" size="small"><ha-icon icon="mdi:chevron-right" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+            <div id="dl_${i}" style="display:flex">
+                <ha-button id="b1_${i}" style="--ha-border-radius-pill: 9999px 0 0 9999px;" size="small"><ha-icon icon="mdi:chevron-left" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button id="bx_${i}" style="--ha-border-radius-pill: 0;" size="small" appearance="filled">-</ha-button>
+                <ha-button id="b2_${i}" style="--ha-border-radius-pill: 0 9999px 9999px 0;" size="small"><ha-icon icon="mdi:chevron-right" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
             </div>`;
         if (zoomTools) html += `
-            <div id="dr_${i}">
-                <ha-button id="bz_${i}" size="small"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
-                <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small"><ha-icon icon="mdi:minus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
-                <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:300px;">
+            <div id="dr_${i}" style="display:flex">
+                <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button id="b${invertZoom ? 5 : 4}_${i}" style="--ha-border-radius-pill: 9999px 0 0 9999px;" size="small"><ha-icon icon="mdi:minus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:300px;--ha-border-radius-pill: 0;">
                     <div slot="trigger">
-                        <ha-button appearance="plain" size="small"></ha-button>
+                        <ha-button appearance="filled" size="small"></ha-button>
                     </div>
                     <mwc-list-item value="1"></mwc-list-item>
                     <mwc-list-item value="2"></mwc-list-item>
@@ -2467,9 +2478,9 @@ export class HistoryCardState {
                     <mwc-list-item value="4368"></mwc-list-item>
                     <mwc-list-item value="8760"></mwc-list-item>
                 </ha-button-menu>
-                <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small"><ha-icon icon="mdi:plus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small" style="--ha-border-radius-pill: 0 9999px 9999px 0;"><ha-icon icon="mdi:plus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
             </div>`;
-        dateTools && zoomTools && (html += '</div>');
+        (dateTools || zoomTools) && (html += '</div>');
 
         if (selector && isMobile) html += `
             <div id='sl_${i}' style="background-color:${bgcol};display:none;padding-left:10px;padding-right:10px;">
@@ -3299,10 +3310,10 @@ class HistoryExplorerCard extends HTMLElement {
             if (g.id > 0 && spacing) html += '<br>';
             if (g.graph.title !== undefined) html += `<div style='text-align:center;'>${g.graph.title}</div>`;
             const h = this.instance.calcGraphHeight(g.graph.type, g.graph.entities.length, g.graph.options?.height);
-            html += `<div style='height:${h}px'>`;
-            html += `<canvas id="graph${g.id}" height="${h}px" style='touch-action:pan-y'></canvas>`;
             if (g.graph.type == 'bar' && !this.instance.ui.hideInterval)
                 html += this.instance.createIntervalSelectorHtml(g.id, h, this.instance.parseIntervalConfig(g.graph.options?.interval), optionStyle);
+            html += `<div style='height:${h}px'>`;
+            html += `<canvas id="graph${g.id}" height="${h}px" style='touch-action:pan-y'></canvas>`;
             if (g.graph.type == 'line' || g.graph.type == 'bar')
                 html += this.instance.createScaleLockIconHtml(g.id, h);
             html += `</div>`;
