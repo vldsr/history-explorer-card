@@ -357,7 +357,7 @@ function hecHookInfoPanel()
         if( tools ) {
 
             return html`
-                <div id="maincard" style="display:${(hec_panel.show === false) ? 'none' : 'block'};margin-bottom: 16px">
+                <div id="maincard" style="display:${(hec_panel.show === false) ? 'none' : 'block'};>
                     <div id='graphlist' style="margin-left:-2px;margin-right:-10px">
                         <div>
                             <select id='bd-0' style="display:${(type == 'bar' && interval) ? 'block' : 'none'};position:relative;float:right;width:80px;right:10px;color:var(--primary-text-color);background-color:${cbcol};border:0px solid black;">
@@ -373,7 +373,7 @@ function hecHookInfoPanel()
                             <canvas id="graph0" height="${h}px" style='touch-action:pan-y'></canvas>
                         </div>
                     </div>
-                    <div style="display:flex;justify-content: space-between;margin: 10px 20px;">
+                    <div style="display:flex;justify-content: space-between;margin: 10px 0;">
                         <div id="dl_${i}">
                             <ha-button id="b1_${i}"><ha-icon icon="mdi:chevron-left" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
                             <ha-button id="bx_${i}">-</ha-button>
