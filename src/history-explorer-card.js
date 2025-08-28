@@ -2458,7 +2458,7 @@ export class HistoryCardState {
             </div>`;
         if (zoomTools) html += `
             <div id="dr_${i}" style="display:flex">
-                <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
                 <ha-button id="b${invertZoom ? 5 : 4}_${i}" style="--ha-border-radius-pill: 9999px 0 0 9999px;" size="small"><ha-icon icon="mdi:minus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
                 <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:300px;--ha-border-radius-pill: 0;">
                     <div slot="trigger">

@@ -350,7 +350,7 @@ function hecHookInfoPanel() {
                             <ha-button id="b2_${i}" style="--ha-border-radius-pill: 0 9999px 9999px 0;" size="small"><ha-icon icon="mdi:chevron-right" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
                         </div>
                         <div id="dr_${i}" style="display:flex">
-                            <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                            <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
                             <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small" style="--ha-border-radius-pill: 9999px 0 0 9999px;"><ha-icon icon="mdi:minus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
                             <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:200px;--ha-border-radius-pill: 0" disabled="true" variant ="neutral">
                                 <div slot="trigger">
