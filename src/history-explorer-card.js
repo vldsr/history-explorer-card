@@ -1490,11 +1490,8 @@ export class HistoryCardState {
         const tooltipSize = this.pconfig.tooltipSize;
 
         var chart = new Chart(ctx, {
-
             type: graphtype,
-
             data: datastructure,
-
             options: {
                 scales: {
                     xAxes: [{
@@ -1556,6 +1553,8 @@ export class HistoryCardState {
                     duration: 0
                 },
                 tooltips: {
+                    mode: 'index',
+                    intersect: false,
                     callbacks: {
                         label: (item, data) => {
                             if (graphtype == 'line' || graphtype == 'bar') {
@@ -1655,13 +1654,9 @@ export class HistoryCardState {
                     }
                 }
             },
-
             plugins: [vertline_plugin]
-
         });
-
         chart.callerInstance = this;
-
         return chart;
     }
 
