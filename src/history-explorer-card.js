@@ -1553,7 +1553,7 @@ export class HistoryCardState {
                     duration: 0
                 },
                 tooltips: {
-                    mode: 'index',
+                    mode: graphtype == 'timeline' ? 'point' : 'index',
                     intersect: false,
                     callbacks: {
                         label: (item, data) => {
