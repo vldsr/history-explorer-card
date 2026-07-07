@@ -337,6 +337,17 @@ function hecHookInfoPanel() {
         const i = 0;
         return html`
                 <div id="maincard" style="display:${(hec_panel.show === false) ? 'none' : 'block'};">
+                    <style>
+                        ha-button {
+                            --wa-form-control-padding-inline: var(--ha-space-1);
+                            --wa-form-control-height: 36px;
+                            min-width: 36px;
+                        }
+                        ha-button-menu:not([open]) ha-menu-inner,
+                        ha-button-menu:not([open]) ha-list-item {
+                            display: none !important;
+                        }
+                    </style>
                     ${getIntervals(type == 'bar' && interval)}
                     <div id='graphlist' style="margin-left:-2px;margin-right:-10px">
                         <div>
@@ -345,32 +356,32 @@ function hecHookInfoPanel() {
                     </div>
                     <div style="display:flex;justify-content: space-between;margin: 10px 0;">
                         <div id="dl_${i}" style="display:flex">
-                            <ha-button id="b1_${i}" style="--ha-border-radius-pill: 9999px 0 0 9999px;" size="small"><ha-icon icon="mdi:chevron-left" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
-                            <ha-button id="bx_${i}" style="--ha-border-radius-pill: 0;" size="small" appearance="filled">-</ha-button>
-                            <ha-button id="b2_${i}" style="--ha-border-radius-pill: 0 9999px 9999px 0;" size="small"><ha-icon icon="mdi:chevron-right" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                            <ha-button id="b1_${i}" size="small"><ha-icon icon="mdi:chevron-left"></ha-icon></ha-button>
+                            <ha-button id="bx_${i}" size="small" style="--wa-form-control-padding-inline: var(--ha-space-2);" appearance="filled">-</ha-button>
+                            <ha-button id="b2_${i}" size="small"><ha-icon icon="mdi:chevron-right"></ha-icon></ha-button>
                         </div>
                         <div id="dr_${i}" style="display:flex">
-                            <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline" style="margin-left: -8px;margin-right: -8px"></ha-icon></ha-button>
-                            <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small" style="--ha-border-radius-pill: 9999px 0 0 9999px;"><ha-icon icon="mdi:minus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
-                            <ha-button-menu id="by_${i}" style="--mdc-menu-max-height:200px;--ha-border-radius-pill: 0" disabled="true" variant ="neutral">
-                                <div slot="trigger">
-                                    <ha-button appearance="filled" variant ="neutral" size="small"></ha-button>
-                                </div>
-                                <mwc-list-item value="1"></mwc-list-item>
-                                <mwc-list-item value="2"></mwc-list-item>
-                                <mwc-list-item value="6"></mwc-list-item>
-                                <mwc-list-item value="12"></mwc-list-item>
-                                <mwc-list-item value="24"></mwc-list-item>
-                                <mwc-list-item value="48"></mwc-list-item>
-                                <mwc-list-item value="72"></mwc-list-item>
-                                <mwc-list-item value="168"></mwc-list-item>
-                                <mwc-list-item value="336"></mwc-list-item>
-                                <mwc-list-item value="720"></mwc-list-item>
-                                <mwc-list-item value="2184"></mwc-list-item>
-                                <mwc-list-item value="4368"></mwc-list-item>
-                                <mwc-list-item value="8760"></mwc-list-item>
+                            <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline"></ha-icon></ha-button>
+                            <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small"><ha-icon icon="mdi:minus"></ha-icon></ha-button>
+                            <ha-button-menu id="by_${i}" style="--wa-form-control-padding-inline: var(--ha-space-2);" disabled="true" variant ="neutral">
+                                <ha-button slot="trigger" appearance="filled" size="small"></ha-button>
+                                <ha-menu-inner>
+                                    <ha-list-item value="1"></ha-list-item>
+                                    <ha-list-item value="2"></ha-list-item>
+                                    <ha-list-item value="6"></ha-list-item>
+                                    <ha-list-item value="12"></ha-list-item>
+                                    <ha-list-item value="24"></ha-list-item>
+                                    <ha-list-item value="48"></ha-list-item>
+                                    <ha-list-item value="72"></ha-list-item>
+                                    <ha-list-item value="168"></ha-list-item>
+                                    <ha-list-item value="336"></ha-list-item>
+                                    <ha-list-item value="720"></ha-list-item>
+                                    <ha-list-item value="2184"></ha-list-item>
+                                    <ha-list-item value="4368"></ha-list-item>
+                                    <ha-list-item value="8760"></ha-list-item>
+                                </ha-menu-inner>
                             </ha-button-menu>
-                            <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small" style="--ha-border-radius-pill: 0 9999px 9999px 0;"><ha-icon icon="mdi:plus" style="margin-left: -12px;margin-right: -12px"></ha-icon></ha-button>
+                            <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small"><ha-icon icon="mdi:plus"></ha-icon></ha-button>
                         </div>
                     </div>
                 </div>
@@ -383,11 +394,11 @@ function hecHookInfoPanel() {
         }
         return html`
             <div id='bd-0' style="display: flex;flex-direction: row;justify-content: flex-end;margin-bottom: 10px;">
-                <ha-button size="small" style="--ha-border-radius-pill: 9999px 0 0 9999px;" appearance="filled">10m</ha-button>
-                <ha-button size="small" style="--ha-border-radius-pill: 0;" appearance="accent">1H</ha-button>
-                <ha-button size="small" style="--ha-border-radius-pill: 0;" appearance="filled">1D</ha-button>
-                <ha-button size="small" style="--ha-border-radius-pill: 0;" appearance="filled">1M</ha-button>
-                <ha-button size="small" style="--ha-border-radius-pill: 0 9999px 9999px 0;" appearance="filled">Line</ha-button>
+                <ha-button size="small" appearance="filled">10m</ha-button>
+                <ha-button size="small" appearance="accent">1H</ha-button>
+                <ha-button size="small" appearance="filled">1D</ha-button>
+                <ha-button size="small" appearance="filled">1M</ha-button>
+                <ha-button size="small" appearance="filled">Line</ha-button>
             </div>`
     }
 
