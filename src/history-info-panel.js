@@ -115,6 +115,7 @@ function hecHookInfoPanel() {
             instance._this.querySelector(`#bx_${i}`)?.addEventListener('click', instance.todayNoReset.bind(instance), false);
             instance._this.querySelector(`#bx_${i}`)?.addEventListener('dblclick', instance.todayReset.bind(instance), false);
             instance._this.querySelector(`#by_${i}`)?.addEventListener('change', instance.timeRangeSelected.bind(instance));
+            instance._this.querySelector(`#by_${i}`)?.addEventListener('click', instance.setTimeRangeDefault.bind(instance));
             instance._this.querySelector(`#bz_${i}`)?.addEventListener('click', instance.toggleZoom.bind(instance), false);
             instance._this.querySelector(`#bo_${i}`)?.addEventListener('click', instance.menuClicked.bind(instance), false);
 
@@ -363,24 +364,7 @@ function hecHookInfoPanel() {
                         <div id="dr_${i}" style="display:flex">
                             <ha-button id="bz_${i}" size="small" style="margin-right: 10px"><ha-icon icon="mdi:magnify-plus-outline"></ha-icon></ha-button>
                             <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small"><ha-icon icon="mdi:minus"></ha-icon></ha-button>
-                            <ha-button-menu id="by_${i}" style="--wa-form-control-padding-inline: var(--ha-space-2);" disabled="true" variant ="neutral">
-                                <ha-button slot="trigger" appearance="filled" size="small"></ha-button>
-                                <ha-menu-inner>
-                                    <ha-list-item value="1"></ha-list-item>
-                                    <ha-list-item value="2"></ha-list-item>
-                                    <ha-list-item value="6"></ha-list-item>
-                                    <ha-list-item value="12"></ha-list-item>
-                                    <ha-list-item value="24"></ha-list-item>
-                                    <ha-list-item value="48"></ha-list-item>
-                                    <ha-list-item value="72"></ha-list-item>
-                                    <ha-list-item value="168"></ha-list-item>
-                                    <ha-list-item value="336"></ha-list-item>
-                                    <ha-list-item value="720"></ha-list-item>
-                                    <ha-list-item value="2184"></ha-list-item>
-                                    <ha-list-item value="4368"></ha-list-item>
-                                    <ha-list-item value="8760"></ha-list-item>
-                                </ha-menu-inner>
-                            </ha-button-menu>
+                            <ha-button id="by_${i}" size="small" style="--wa-form-control-padding-inline: var(--ha-space-2);" appearance="filled"></ha-button>
                             <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small"><ha-icon icon="mdi:plus"></ha-icon></ha-button>
                         </div>
                     </div>

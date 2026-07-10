@@ -395,6 +395,10 @@ export class HistoryCardState {
         this.incZoomStep();
     }
 
+    setTimeRangeDefault(event) {
+        this.today(true);
+    }
+
     timeRangeSelected(event) {
         this.setTimeRange(+event.currentTarget.selected.value, true);
     }
@@ -652,8 +656,7 @@ export class HistoryCardState {
         if (!control) {
             return;
         }
-        control.items?.forEach(item => item.activated = item.value == range);
-        control.querySelector('ha-button').innerText = this.getRangeText(range);
+        control.innerText = this.getRangeText(range);
     }
 
     setTimeRange(range, update, t_center = null, t_position = 0.5) {
@@ -2466,24 +2469,7 @@ export class HistoryCardState {
             <div id="dr_${i}" style="display:flex">
                 <ha-button id="bz_${i}" size="small" style="margin-right: 10px;"><ha-icon icon="mdi:magnify-plus-outline"></ha-icon></ha-button>
                 <ha-button id="b${invertZoom ? 5 : 4}_${i}" size="small"><ha-icon icon="mdi:minus"></ha-icon></ha-button>
-                <ha-button-menu id="by_${i}" size="small" style="--wa-form-control-padding-inline: var(--ha-space-2);" fixed style="--mdc-menu-max-height:300px;">
-                    <ha-button slot="trigger" appearance="filled" size="small"></ha-button>
-                    <ha-menu-inner>
-                        <ha-list-item value="1"></ha-list-item>
-                        <ha-list-item value="2"></ha-list-item>
-                        <ha-list-item value="6"></ha-list-item>
-                        <ha-list-item value="12"></ha-list-item>
-                        <ha-list-item value="24"></ha-list-item>
-                        <ha-list-item value="48"></ha-list-item>
-                        <ha-list-item value="72"></ha-list-item>
-                        <ha-list-item value="168"></ha-list-item>
-                        <ha-list-item value="336"></ha-list-item>
-                        <ha-list-item value="720"></ha-list-item>
-                        <ha-list-item value="2184"></ha-list-item>
-                        <ha-list-item value="4368"></ha-list-item>
-                        <ha-list-item value="8760"></ha-list-item>
-                    </ha-menu-inner>
-                </ha-button-menu>
+                <ha-button id="by_${i}" size="small" style="--wa-form-control-padding-inline: var(--ha-space-2);" appearance="filled"></ha-button>
                 <ha-button id="b${invertZoom ? 4 : 5}_${i}" size="small"><ha-icon icon="mdi:plus"></ha-icon></ha-button>
             </div>`;
         (dateTools || zoomTools) && (html += '</div>');
@@ -2661,6 +2647,7 @@ export class HistoryCardState {
                 this._this.querySelector(`#bx_${i}`)?.addEventListener('click', this.todayNoReset.bind(this), false);
                 this._this.querySelector(`#bx_${i}`)?.addEventListener('dblclick', this.todayReset.bind(this), false);
                 this._this.querySelector(`#by_${i}`)?.addEventListener('selected', this.timeRangeSelected.bind(this));
+                this._this.querySelector(`#by_${i}`)?.addEventListener('click', this.setTimeRangeDefault.bind(this));
                 this._this.querySelector(`#bz_${i}`)?.addEventListener('click', this.toggleZoom.bind(this), false);
                 this._this.querySelector(`#ef_${i}`)?.addEventListener('click', this.exportFile.bind(this), false);
                 this._this.querySelector(`#eh_${i}`)?.addEventListener('click', this.exportStatistics.bind(this), false);
