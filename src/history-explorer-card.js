@@ -2647,7 +2647,7 @@ export class HistoryCardState {
                 this._this.querySelector(`#bx_${i}`)?.addEventListener('click', this.todayNoReset.bind(this), false);
                 this._this.querySelector(`#bx_${i}`)?.addEventListener('dblclick', this.todayReset.bind(this), false);
                 this._this.querySelector(`#by_${i}`)?.addEventListener('selected', this.timeRangeSelected.bind(this));
-                this._this.querySelector(`#by_${i}`)?.addEventListener('click', this.setTimeRangeDefault.bind(this));
+                this._this.querySelector(`#by_${i}`)?.addEventListener('dblclick', this.setTimeRangeDefault.bind(this));
                 this._this.querySelector(`#bz_${i}`)?.addEventListener('click', this.toggleZoom.bind(this), false);
                 this._this.querySelector(`#ef_${i}`)?.addEventListener('click', this.exportFile.bind(this), false);
                 this._this.querySelector(`#eh_${i}`)?.addEventListener('click', this.exportStatistics.bind(this), false);

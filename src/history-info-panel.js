@@ -114,7 +114,7 @@ function hecHookInfoPanel() {
             instance._this.querySelector(`#b5_${i}`)?.addEventListener('click', instance.incZoom.bind(instance), false);
             instance._this.querySelector(`#bx_${i}`)?.addEventListener('click', instance.todayNoReset.bind(instance), false);
             instance._this.querySelector(`#bx_${i}`)?.addEventListener('dblclick', instance.todayReset.bind(instance), false);
-            instance._this.querySelector(`#by_${i}`)?.addEventListener('change', instance.timeRangeSelected.bind(instance));
+            instance._this.querySelector(`#by_${i}`)?.addEventListener('dblclick', instance.timeRangeSelected.bind(instance));
             instance._this.querySelector(`#by_${i}`)?.addEventListener('click', instance.setTimeRangeDefault.bind(instance));
             instance._this.querySelector(`#bz_${i}`)?.addEventListener('click', instance.toggleZoom.bind(instance), false);
             instance._this.querySelector(`#bo_${i}`)?.addEventListener('click', instance.menuClicked.bind(instance), false);
